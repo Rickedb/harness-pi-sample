@@ -1,0 +1,24 @@
+{
+  "name": "harness-pi-sample",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A hands-on tour of every Pi capability, with one small example each.",
+  "engines": {
+    "node": ">=22.19"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "1.4.0",
+    "@types/node": "^22.20.5",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "smoke": "bash scripts/smoke.sh",
+    "check": "npm run typecheck && npm run smoke",
+    "pi": "scripts/pi-env",
+    "pi:iso": "scripts/pi-iso",
+    "pi:stack": "scripts/pi-stack",
+    "pi:claude": "scripts/pi-claude"
+  }
+}

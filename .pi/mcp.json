@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "sample": {
+      "command": "node",
+      "args": ["examples/16-mcp/server.mjs"],
+      "description": "Sample utility tools: reverse_text, utc_now, add",
+      "exposure": "direct"
+    }
+  }
+}

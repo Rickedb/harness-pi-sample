@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# generated at runtime by the examples (rm -rf to reset)
+.pi-agent-dir/
+.sessions/
+.trace/
+
+# secrets: keep the template, ignore the real thing
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+
+# build / tooling output
+*.tsbuildinfo
+dist/
+coverage/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# STACK mode: Pi with this repo's whole .pi/ project config trusted and loaded -
+# every example wired together (see .pi/settings.json). Run it from the repo root.
+#
+#   scripts/pi-stack                      interactive TUI
+#   scripts/pi-stack -p "inspect"         one-shot print mode
+#
+# Env: PI_MODEL=claude | provider/id   use a real model instead of the mock
+set -euo pipefail
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$HERE/.." && pwd)"
+cd "$ROOT"
+flags=(-a --session-dir "$ROOT/.sessions")
+source "$HERE/_model.sh"
+[[ -n "$MODEL_RESOLVED" ]] && flags+=(--model "$MODEL_RESOLVED")
+exec "$HERE/pi-env" "${flags[@]}" "$@"

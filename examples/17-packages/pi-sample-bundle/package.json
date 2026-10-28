@@ -1,0 +1,16 @@
+{
+  "name": "pi-sample-bundle",
+  "version": "0.1.0",
+  "description": "A Pi package bundling an extension, a skill, a prompt template and a theme.",
+  "keywords": ["pi-package"],
+  "pi": {
+    "extensions": ["./extensions"],
+    "skills": ["./skills"],
+    "prompts": ["./prompts"],
+    "themes": ["./themes"]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "typebox": "*"
+  }
+}

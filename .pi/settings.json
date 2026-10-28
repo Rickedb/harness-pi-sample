@@ -1,0 +1,26 @@
+{
+  "$schema": "https://pi.dev/schemas/settings.schema.json",
+  "defaultProvider": "mock",
+  "defaultModel": "scripted",
+  "theme": "sample-sunset",
+  "quietStartup": false,
+
+  "extensions": [
+    "../examples/00-mock-provider/mock-provider.ts",
+    "../examples/01-trace/trace.ts",
+    "../examples/07-custom-tool/tools.ts",
+    "../examples/08-commands-flags-shortcuts/commands.ts",
+    "../examples/09-guardrails/guardrails.ts",
+    "../examples/10-input-transform/input.ts",
+    "../examples/11-stateful-tool/notes.ts",
+    "../examples/12-ui/ui-demo.ts",
+    "../examples/13-prompt-hooks/prompt-hooks.ts",
+    "../examples/14-event-bus/audit-log.ts",
+    "../examples/14-event-bus/blocked-counter.ts",
+    "../examples/15-dynamic-tools/dynamic-tools.ts"
+  ],
+  "skills": ["../examples/05-skills"],
+  "prompts": ["../examples/04-prompt-templates"],
+  "themes": ["../examples/06-themes"],
+  "packages": ["../examples/17-packages/pi-sample-bundle"]
+}

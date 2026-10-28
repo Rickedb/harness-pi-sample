@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# ISOLATED mode: Pi with every discovery mechanism switched OFF, plus the offline mock model.
+# You then opt in to exactly one capability at a time, so you can see what it changes:
+#
+#   scripts/pi-iso -e examples/07-custom-tool/tools.ts            # one extension
+#   scripts/pi-iso --skill examples/05-skills                      # one skill dir
+#   scripts/pi-iso --prompt-template examples/04-prompt-templates  # templates
+#
+# Flags used (see docs/cli.md in the Pi package):
+#   -na  ignore project trust-gated .pi/ files     -ne  no extensions   -ns  no skills
+#   -np  no prompt templates    -nc  no AGENTS.md  --no-themes
+#
+# Env: PI_MODEL=claude | provider/id   use a real model instead of the mock (see docs/01-getting-started.md)
+#      PI_ISO_CONTEXT=1       keep AGENTS.md / CLAUDE.md discovery on (example 02)
+set -euo pipefail
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$HERE/.." && pwd)"
+
+flags=(-na -ne -ns -np --no-themes --session-dir "$ROOT/.sessions")
+[[ "${PI_ISO_CONTEXT:-}" == "1" ]] || flags+=(-nc)
+
+source "$HERE/_model.sh"
+if [[ -n "$MODEL_RESOLVED" ]]; then
+  flags+=(--model "$MODEL_RESOLVED")
+else
+  flags+=(-e "$ROOT/examples/00-mock-provider/mock-provider.ts" --model mock/scripted)
+fi
+
+exec "$HERE/pi-env" "${flags[@]}" "$@"

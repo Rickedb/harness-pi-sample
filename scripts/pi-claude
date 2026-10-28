@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# The whole stack (.pi/) on Claude instead of the mock model.
+#   scripts/pi-claude                       interactive
+#   scripts/pi-claude -p "roll two d20 and note the total"
+# Model: CLAUDE_MODEL=claude-opus-5-5 scripts/pi-claude   (default claude-sonnet-5-5; list: scripts/pi-env --list-models anthropic)
+# For ONE capability on Claude:  PI_MODEL=claude scripts/pi-iso -e examples/07-custom-tool/tools.ts
+set -euo pipefail
+export PI_MODEL=claude
+exec "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/pi-stack" "$@"

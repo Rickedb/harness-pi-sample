@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Runs the locally installed Pi with a *hermetic* agent directory.
+#
+# Pi normally keeps credentials, settings, sessions and global extensions in ~/.pi/agent.
+# For this sample we point PI_CODING_AGENT_DIR at ./.pi-agent-dir so that:
+#   - nothing you installed globally leaks into the demos, and
+#   - nothing the demos do (login, `pi install`, sessions) touches your real setup.
+# Set PI_USE_HOME=1 to use your real ~/.pi/agent instead (e.g. to reuse your /login).
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export SAMPLE_ROOT="$ROOT"
+# Optional local secrets (gitignored): copy .env.example to .env and add ANTHROPIC_API_KEY.
+ENV_FILE="${PI_ENV_FILE:-$ROOT/.env}"
+if [[ -f "$ENV_FILE" ]]; then set -a; source "$ENV_FILE"; set +a; fi
+if [[ "${PI_USE_HOME:-}" != "1" ]]; then
+  export PI_CODING_AGENT_DIR="${PI_CODING_AGENT_DIR:-$ROOT/.pi-agent-dir}"
+fi
+if [[ "${PI_DRY_RUN:-}" == "1" ]]; then printf 'pi'; printf ' %q' "$@"; printf '\n'; exit 0; fi
+exec "$ROOT/node_modules/.bin/pi" "$@"
