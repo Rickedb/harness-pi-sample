@@ -4,17 +4,21 @@
 
 | Return | Effect | Demo |
 |---|---|---|
-| `{ action: "transform", text }` | rewrite and continue | `?quick what is a monad` |
-| `{ action: "handled" }` | swallow it — **no model call, no tokens** | `ping`, `time` |
 | `{ action: "continue" }` | leave it | everything else |
+| `{ action: "transform", text }` | rewrite the text and continue (attached images are kept) | `?quick what is a monad` |
+| `{ action: "transform", text, images }` | rewrite the text **and** replace the images (`[]` drops them all) | `?text describe this` |
+| `{ action: "handled" }` | swallow it — **no model call, no tokens** | `ping`, `time` |
+
+These are all the actions Pi's `InputEventResult` allows. The event also gives you `source`, `images` and
+`streamingBehavior` (`"steer"` / `"followUp"` while the agent is mid-run, `undefined` when idle) to decide with.
 
 ## Run
 
 ```bash
-I=examples/10-input-transform/input.ts
-scripts/pi-iso -e $I -p '?quick what is a monad'    # mock echoes the rewritten prompt
-scripts/pi-iso -e $I -p 'ping'                       # prints nothing: handled locally (notify is a no-op in print mode)
-scripts/pi-iso -e $I                                 # TUI: "ping" → pong toast, no model request
+scripts/pi-iso -e examples/10-input-transform/input.ts -p '?quick what is a monad'    # mock echoes the rewritten prompt
+scripts/pi-iso -e examples/10-input-transform/input.ts -p '?text describe this'         # transform + images: [] (attached images are dropped)
+scripts/pi-iso -e examples/10-input-transform/input.ts -p 'ping'                       # prints nothing: handled locally (notify is a no-op in print mode)
+scripts/pi-iso -e examples/10-input-transform/input.ts                                 # TUI: "ping" → pong toast, no model request
 ```
 
 ## How it interacts (ordering is the point)

@@ -50,7 +50,8 @@ check  "09 normal bash passes"              'returned:.*|^fine'                 
 check  "09 secret redacted"                 'REDACTED:aws-key'                         $ISO $GR -p 'run echo AKIAABCDEFGHIJKLMNOP'
 refute "09 secret never reaches model"      'AKIAABCDEFGHIJKLMNOP'                     $ISO $GR -p 'run echo AKIAABCDEFGHIJKLMNOP'
 check  "10 ?quick rewritten"                'Answer in one or two sentences'           $ISO -e examples/10-input-transform/input.ts -p '?quick why'
-refute "10 ping never reaches model"        'You said'                                 $ISO -e examples/10-input-transform/input.ts -p 'ping'
+refute "10 ?text prefix stripped"                 '\?text'                                   $ISO -e examples/10-input-transform/input.ts -p '?text describe this'
+refute "10 ping never reaches model"       'You said'                                 $ISO -e examples/10-input-transform/input.ts -p 'ping'
 rm -rf .sessions
 $ISO -e examples/11-stateful-tool/notes.ts -p 'call note {"action":"add","text":"one"}' </dev/null >/dev/null 2>&1
 check  "11 state survives --continue"       '1\. one'                                  $ISO -c -e examples/11-stateful-tool/notes.ts -p 'call note {"action":"add","text":"two"}'
